@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 01, 2024 at 01:16 PM
+-- Generation Time: Sep 02, 2024 at 05:20 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,6 +37,7 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `title`) VALUES
+(13, 'ahm'),
 (5, 'ahmed'),
 (7, 'gam'),
 (10, 'gam1'),
@@ -76,18 +77,25 @@ INSERT INTO `orders` (`order_num`, `ordered_by`, `date`, `total_paid`) VALUES
 --
 
 CREATE TABLE `order_details` (
-  `product_id` int(11) UNSIGNED NOT NULL,
   `order_num` int(11) UNSIGNED NOT NULL,
+  `product_id` int(11) UNSIGNED NOT NULL,
   `price_unit` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL
+  `quantity` int(11) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `title` varchar(50) NOT NULL,
+  `description` text NOT NULL,
+  `subtotal` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `order_details`
 --
 
-INSERT INTO `order_details` (`product_id`, `order_num`, `price_unit`, `quantity`) VALUES
-(6, 5, 5, 1000);
+INSERT INTO `order_details` (`order_num`, `product_id`, `price_unit`, `quantity`, `image`, `title`, `description`, `subtotal`) VALUES
+(5, 6, 5, 7, '1725042226.jpg', 'addida', 'In publishing and graphi to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available', 25),
+(5, 7, 1000, 4, '1725042356.png', 'samsung', 'nice phone kksjsjjsaklks kjshdhdkk', 4000),
+(5, 8, 8000, 5, '1725042496.jpg', 'hp', 'laptops laptops laptops laptops laptops laptops laptops', 40000),
+(5, 9, 44, 5, '1725042531.jpg', 'dfdf', 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available', 220);
 
 -- --------------------------------------------------------
 
@@ -168,7 +176,7 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `order_details`
   ADD PRIMARY KEY (`product_id`),
-  ADD KEY `order_num` (`order_num`);
+  ADD KEY `order_num` (`product_id`);
 
 --
 -- Indexes for table `products`
@@ -192,7 +200,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -226,8 +234,7 @@ ALTER TABLE `orders`
 -- Constraints for table `order_details`
 --
 ALTER TABLE `order_details`
-  ADD CONSTRAINT `order_details_ibfk_1` FOREIGN KEY (`order_num`) REFERENCES `orders` (`order_num`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `order_details_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `order_details_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `products`
